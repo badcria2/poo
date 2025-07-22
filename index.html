@@ -13,10 +13,33 @@
 
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
             color: #ffffff;
             line-height: 1.6;
             min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(34, 197, 94, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(34, 197, 94, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(34, 197, 94, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+            animation: backgroundPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes backgroundPulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.05); }
         }
 
         .container {
@@ -29,8 +52,45 @@
             text-align: center;
             margin-bottom: 50px;
             padding: 40px 0;
-            background: radial-gradient(circle at center, rgba(34, 197, 94, 0.1) 0%, transparent 70%);
+            background: 
+                radial-gradient(circle at center, rgba(34, 197, 94, 0.15) 0%, transparent 70%),
+                linear-gradient(45deg, rgba(34, 197, 94, 0.05) 0%, transparent 100%);
             border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(34, 197, 94, 0.1), transparent);
+            animation: headerRotate 15s linear infinite;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, transparent 0%, rgba(34, 197, 94, 0.05) 50%, transparent 100%);
+            animation: headerSweep 3s ease-in-out infinite;
+        }
+
+        @keyframes headerRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes headerSweep {
+            0%, 100% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
         }
 
         .main-title {
@@ -40,7 +100,28 @@
             text-transform: uppercase;
             letter-spacing: 3px;
             margin-bottom: 20px;
-            text-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
+            text-shadow: 
+                0 0 20px rgba(34, 197, 94, 0.5),
+                0 0 40px rgba(34, 197, 94, 0.3),
+                0 0 60px rgba(34, 197, 94, 0.1);
+            animation: titleGlow 2s ease-in-out infinite alternate;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes titleGlow {
+            0% { 
+                text-shadow: 
+                    0 0 20px rgba(34, 197, 94, 0.5),
+                    0 0 40px rgba(34, 197, 94, 0.3),
+                    0 0 60px rgba(34, 197, 94, 0.1);
+            }
+            100% { 
+                text-shadow: 
+                    0 0 30px rgba(34, 197, 94, 0.8),
+                    0 0 60px rgba(34, 197, 94, 0.5),
+                    0 0 80px rgba(34, 197, 94, 0.3);
+            }
         }
 
         .subtitle {
@@ -51,15 +132,39 @@
 
         .duration-badge {
             display: inline-block;
-            background: linear-gradient(135deg, #22c55e, #16a34a);
+            background: linear-gradient(135deg, #22c55e, #16a34a, #22c55e);
+            background-size: 200% 200%;
             color: #000;
             padding: 15px 30px;
             border-radius: 50px;
             font-weight: bold;
             font-size: 1.2rem;
             text-transform: uppercase;
-            box-shadow: 0 10px 30px rgba(34, 197, 94, 0.3);
+            box-shadow: 
+                0 10px 30px rgba(34, 197, 94, 0.3),
+                0 0 0 0 rgba(34, 197, 94, 0.4);
             transform: translateY(-5px);
+            animation: badgePulse 3s ease-in-out infinite, badgeGradient 4s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { 
+                box-shadow: 
+                    0 10px 30px rgba(34, 197, 94, 0.3),
+                    0 0 0 0 rgba(34, 197, 94, 0.4);
+            }
+            50% { 
+                box-shadow: 
+                    0 15px 35px rgba(34, 197, 94, 0.4),
+                    0 0 0 10px rgba(34, 197, 94, 0.1);
+            }
+        }
+
+        @keyframes badgeGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
         .topics-grid {
@@ -70,7 +175,9 @@
         }
 
         .topic-card {
-            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            background: 
+                linear-gradient(135deg, #1a1a1a, #2a2a2a),
+                radial-gradient(circle at top right, rgba(34, 197, 94, 0.1) 0%, transparent 50%);
             border: 2px solid #22c55e;
             border-radius: 15px;
             padding: 20px;
@@ -87,8 +194,25 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(34, 197, 94, 0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(34, 197, 94, 0.2), transparent);
             transition: left 0.5s;
+        }
+
+        .topic-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(34, 197, 94, 0.1) 0%, transparent 70%);
+            animation: cardGlow 4s ease-in-out infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .topic-card:hover::after {
+            opacity: 1;
         }
 
         .topic-card:hover::before {
@@ -96,8 +220,16 @@
         }
 
         .topic-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(34, 197, 94, 0.2);
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 
+                0 25px 50px rgba(34, 197, 94, 0.2),
+                0 0 0 1px rgba(34, 197, 94, 0.3);
+            border-color: rgba(34, 197, 94, 0.8);
+        }
+
+        @keyframes cardGlow {
+            0%, 100% { transform: rotate(0deg) scale(0.8); }
+            50% { transform: rotate(180deg) scale(1.2); }
         }
 
         .topic-card h3 {
@@ -120,18 +252,43 @@
         }
 
         .class-card {
-            background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+            background: 
+                linear-gradient(135deg, #1a1a1a, #0a0a0a),
+                radial-gradient(circle at bottom left, rgba(34, 197, 94, 0.05) 0%, transparent 50%);
             border-left: 5px solid #22c55e;
             margin: 20px 0;
             padding: 25px;
             border-radius: 10px;
             transition: all 0.3s ease;
             position: relative;
+            overflow: hidden;
+        }
+
+        .class-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -5px;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(180deg, #22c55e, #16a34a, #22c55e);
+            background-size: 100% 200%;
+            animation: borderFlow 3s ease-in-out infinite;
         }
 
         .class-card:hover {
-            transform: translateX(10px);
-            box-shadow: -5px 0 20px rgba(34, 197, 94, 0.3);
+            transform: translateX(15px) scale(1.02);
+            box-shadow: 
+                -8px 0 25px rgba(34, 197, 94, 0.3),
+                0 10px 30px rgba(0, 0, 0, 0.3);
+            background: 
+                linear-gradient(135deg, #2a2a2a, #1a1a1a),
+                radial-gradient(circle at bottom left, rgba(34, 197, 94, 0.1) 0%, transparent 50%);
+        }
+
+        @keyframes borderFlow {
+            0%, 100% { background-position: 0% 0%; }
+            50% { background-position: 0% 100%; }
         }
 
         .class-date {
@@ -317,31 +474,73 @@
             position: fixed;
             top: 0;
             right: 0;
-            width: 100px;
+            width: 200px;
             height: 100vh;
             pointer-events: none;
             overflow: hidden;
+            z-index: -1;
         }
 
         .dot {
             position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #22c55e;
             border-radius: 50%;
-            animation: float 6s infinite ease-in-out;
+            background: radial-gradient(circle, #22c55e, rgba(34, 197, 94, 0.3));
+            animation: float 8s infinite ease-in-out;
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
         }
 
-        .dot:nth-child(1) { top: 10%; right: 20px; animation-delay: 0s; }
-        .dot:nth-child(2) { top: 20%; right: 40px; animation-delay: 1s; }
-        .dot:nth-child(3) { top: 30%; right: 60px; animation-delay: 2s; }
-        .dot:nth-child(4) { top: 40%; right: 30px; animation-delay: 3s; }
-        .dot:nth-child(5) { top: 50%; right: 50px; animation-delay: 4s; }
-        .dot:nth-child(6) { top: 60%; right: 10px; animation-delay: 5s; }
+        .dot:nth-child(1) { 
+            width: 6px; height: 6px; top: 10%; right: 20px; 
+            animation-delay: 0s; animation-duration: 6s; 
+        }
+        .dot:nth-child(2) { 
+            width: 4px; height: 4px; top: 20%; right: 60px; 
+            animation-delay: 1.5s; animation-duration: 8s; 
+        }
+        .dot:nth-child(3) { 
+            width: 8px; height: 8px; top: 35%; right: 30px; 
+            animation-delay: 3s; animation-duration: 7s; 
+        }
+        .dot:nth-child(4) { 
+            width: 5px; height: 5px; top: 50%; right: 80px; 
+            animation-delay: 4.5s; animation-duration: 9s; 
+        }
+        .dot:nth-child(5) { 
+            width: 7px; height: 7px; top: 65%; right: 15px; 
+            animation-delay: 6s; animation-duration: 6.5s; 
+        }
+        .dot:nth-child(6) { 
+            width: 3px; height: 3px; top: 80%; right: 45px; 
+            animation-delay: 7.5s; animation-duration: 8.5s; 
+        }
+
+        /* Puntos adicionales para más dinamismo */
+        .dot:nth-child(7) { 
+            width: 5px; height: 5px; top: 5%; right: 100px; 
+            animation-delay: 2s; animation-duration: 7.5s; 
+        }
+        .dot:nth-child(8) { 
+            width: 6px; height: 6px; top: 75%; right: 90px; 
+            animation-delay: 5s; animation-duration: 6.8s; 
+        }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px) opacity(0.3); }
-            50% { transform: translateY(-20px) opacity(1); }
+            0%, 100% { 
+                transform: translateY(0px) translateX(0px) scale(1); 
+                opacity: 0.4; 
+            }
+            25% { 
+                transform: translateY(-30px) translateX(10px) scale(1.2); 
+                opacity: 0.8; 
+            }
+            50% { 
+                transform: translateY(-15px) translateX(-15px) scale(0.8); 
+                opacity: 1; 
+            }
+            75% { 
+                transform: translateY(-25px) translateX(5px) scale(1.1); 
+                opacity: 0.6; 
+            }
         }
 
         @media (max-width: 768px) {
@@ -378,6 +577,8 @@
 </head>
 <body>
     <div class="floating-dots">
+        <div class="dot"></div>
+        <div class="dot"></div>
         <div class="dot"></div>
         <div class="dot"></div>
         <div class="dot"></div>
